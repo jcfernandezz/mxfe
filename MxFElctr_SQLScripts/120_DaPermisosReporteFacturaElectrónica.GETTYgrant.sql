@@ -9,7 +9,7 @@
 --07/01/11 jcf Agrega grants varios para impresión de factura en Esp, Usa, Perú y Colombia
 --
 -----------------------------------------------------------------------------------
---use [bd compañía]
+--use mex10
 
 --Vistas que usa la impresión de factura
 grant select on dbo.IMPRIME_COMPROBANTE_ELECTRONICO to rol_cfdigital, dyngrp;

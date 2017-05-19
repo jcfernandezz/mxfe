@@ -6,7 +6,7 @@ SET NOCOUNT ON
 GO
 
 PRINT 'Creando objetos para factura electrónica CFDI'
-:setvar workpath C:\jcTii\Desarrollo\MEX_Factura_digital_cfdi\E_Implementation\MxFElctr_SQLScripts
+:setvar workpath C:\jcTii\Desarrollo\MEX_Factura_digital_cfdi\mxfe\MxFElctr_SQLScripts
 
 --:r C:\JCTii\GPRelational\rmvwRmTransaccionesTodas.view.sql
 --:On Error exit
@@ -26,7 +26,7 @@ PRINT 'Creando objetos para factura electrónica CFDI'
 :On Error exit
 :r $(workpath)\35_RegistraHoradeFacturaElectronica.trigger.sql
 :On Error exit
-:r $(workpath)\40_ObtieneConfiguracionCartasEmail.view.sql
+:r $(workpath)\40_ObtieneConfiguracionCartasEmail.viewgp2013oAnt.sql
 :On Error exit
 --:r $(workpath)\40_ObtieneConfiguracionCartasEmail.viewGP2015.sql
 --:On Error exit
@@ -40,12 +40,14 @@ PRINT 'Creando objetos para factura electrónica CFDI'
 :On Error exit
 :r $(workpath)\83_UtilesYConfiguracion.view.sql
 :On Error exit
+:r $(workpath)\84_fCfdEmisor.function.sql
+:On Error exit
 :r $(workpath)\85_fCfdDatosAdicionales.function.sql
 :On Error exit
-:r $(workpath)\90_vwSopTransacionesVenta.view.sql
-:On Error exit
---:r $(workpath)\90_vwSopTransacionesVenta.GETTYview.sql
+--:r $(workpath)\90_vwSopTransacionesVenta.view.sql
 --:On Error exit
+:r $(workpath)\90_vwSopTransacionesVenta.GETTYview.sql
+:On Error exit
 :r $(workpath)\98_Addenda.function.sql
 :On Error exit
 :r $(workpath)\100_ObtieneDocumentosXml.view.sql

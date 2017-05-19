@@ -1,11 +1,6 @@
 
-SET ANSI_NULLS ON
-GO
 
-SET QUOTED_IDENTIFIER ON
-GO
-
-ALTER VIEW [dbo].[IMPRIME_COMPROBANTE_ELECTRONICO]
+create VIEW [dbo].[IMPRIME_COMPROBANTE_ELECTRONICO]
 AS
 --18/01/11 jcf Reemplaza montos funcionales por montos originales
 --04/07/12 jcf Agrega campo NumCtaPago

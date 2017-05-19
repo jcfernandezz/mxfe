@@ -10,7 +10,7 @@
 -------------------------------------------------------------------------------------------
 --Permiso a usuarios Windows:
 -------------------------------------------------------------------------------------------
-use gmope; 
+use mex10; 
 create user [GILA\mayra.garcia ] for login [GILA\mayra.garcia];
 --gmope
 EXEC sp_addrolemember 'rol_cfdigital', 'GILA\tiiselam' ;
