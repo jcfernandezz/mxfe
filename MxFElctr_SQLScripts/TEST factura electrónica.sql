@@ -15,8 +15,12 @@ select dbo.fCfdGeneraDocumentoDeVentaXML (3, '0015885')
 
 select rfc, IdImpuestoCliente, total, uuid, mensaje, *
 from vwCfdTransaccionesDeVenta
-where sopnumbe like '%15885'
+where sopnumbe like '%00000059'
 
+
+select top 100 stabla, *
+from IMPRIME_COMPROBANTE_ELECTRONICO
+WHERE SOPNUMBE LIKE '00000059'
 
 select soptype, docid, sopnumbe, fechaHoraEmision, regimenFiscal, rfcReceptor, nombreCliente, total, formaDePago, folioFiscal,
 	noCertificadoCSD, [version], selloCFD, selloSAT, cadenaOriginalSAT, noCertificadoSAT, FechaTimbrado, rutaYNomArchivo

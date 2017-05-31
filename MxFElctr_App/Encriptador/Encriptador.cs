@@ -65,8 +65,10 @@ namespace Encriptador
             }
             catch (Exception eRsa)
             {
-                //Console.WriteLine("No se pudo obtener la llave. [Encriptador]");
-                ultimoMensaje += "[TecnicaDeEncriptacion] Verifique la configuración del certificado. No se puede obtener la clave privada. " + eRsa.Message;
+                ultimoMensaje += "[TecnicaDeEncriptacion] Excepción al obtener datos del certificado. Verifique la ruta de los siguientes archivos: " + Environment.NewLine +
+                            rutaLlavePrivada + Environment.NewLine + 
+                            rutaCertificado + Environment.NewLine +
+                            rutaCertificadoPem + Environment.NewLine + eRsa.Message;
                 numErrores++;
             }
         }
