@@ -455,7 +455,7 @@ select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora,
 	isnull(pa.ruta_certificado, '_noexiste') ruta_certificadoPac, isnull(pa.ruta_clave, '_noexiste') ruta_clavePac, isnull(pa.contrasenia_clave, '') contrasenia_clavePac, 
 	emi.rfc, emi.regimen, emi.rutaXml, tv.nroOrden USERDEF1,
 	isnull(lf.estadoActual, '000000') estadoActual, 
-	isnull(lf.mensajeEA, 'Está '+tv.estadoContabilizado) mensajeEA,
+	isnull(lf.mensajeEA, tv.estadoContabilizado) mensajeEA,
 	isnull(dx.metodoDePago, '') metodoDePago,
 	isnull(dx.NumCtaPago, '') NumCtaPago,
 	dbo.fCfdAddendaXML(tv.custnmbr,  tv.soptype, tv.sopnumbe, tv.docid, tv.cstponbr, tv.curncyid, tv.docdate, tv.xchgrate, tv.subtotal, tv.total) addenda
