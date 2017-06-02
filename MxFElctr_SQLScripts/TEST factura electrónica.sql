@@ -3,8 +3,15 @@
 --
 --1. Probar en bd que no tenga los objetos sql instalados
 -- 	* Aviso de que tu Certificado Digital está por vencer
-use gmope;
+use per10;
 
+--actualiza la ruta de las facturas de col
+--UPDATE s set inet7 = '\\GILABASRDB06\GettyCO_FacturaElectronica\'
+select *
+from SY01200 s
+where master_id = 'COL10'
+and master_type = 'CMP'
+----------------------------------------------------------------------------
 select * from dbo.fCfdEmisor()
 select * from vwSopLineasTrxVentas
 select dbo.fCfdParteXML(3, 'FV A0001-00000002')
