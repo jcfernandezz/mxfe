@@ -23,6 +23,8 @@
         <Nombre>[nombre del parámetro]</Nombre>
         <Tipo>[tipo de dato]</Tipo>
       </Parametro>
+	    <imprime>[1: SI, 0: NO]</imprime>
+	    <nombreImpresora>[Nombre de la impresora predeterminada]</nombreImpresora>
     </rutaReporteCrystal>
     <ReporteSSRS tipo="default">
       <Ruta>[ruta y nombre del reporte en reporting services Ej: /xpress/factura]</Ruta>

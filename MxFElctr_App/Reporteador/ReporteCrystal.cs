@@ -421,7 +421,6 @@ namespace Reporteador
                 PageMargins margins;
 
                 cryRpt.Load(Param.rutaReporteCrystal);
-
                 //Conecta la base de datos
                 crConnectionInfo.IntegratedSecurity = _IntegratedSecurity;
                 crConnectionInfo.ServerName = _SrvrName;
@@ -464,6 +463,12 @@ namespace Reporteador
                     margins.leftMargin = Param.leftMargin;
                     margins.rightMargin = Param.rightMargin;
                     cryRpt.PrintOptions.ApplyPageMargins(margins);
+                }
+
+                if (Param.ImprimeEnImpresora)
+                {
+                    cryRpt.PrintOptions.PrinterName = Param.NombreImpresora;
+                    cryRpt.PrintToPrinter(1, false, 0, 0);
                 }
                 return cryRpt;
             }

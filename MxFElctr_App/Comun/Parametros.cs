@@ -87,6 +87,8 @@ namespace Comun
         private string _emailCarta = "";
         private string _emailAdjEmite = "na";   //default no aplica
         private string _emailAdjImprm = "na";   //default no aplica
+        private string _imprimeEnImpresora;
+        private string _nombreImpresora;
 
         public Parametros()
         {
@@ -138,6 +140,8 @@ namespace Comun
                 _topMargin = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/rutaReporteCrystal[@tipo='default']/Margenes/topMargin/text()").Value;
                 _leftMargin = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/rutaReporteCrystal[@tipo='default']/Margenes/leftMargin/text()").Value;
                 _rightMargin = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/rutaReporteCrystal[@tipo='default']/Margenes/rightMargin/text()").Value;
+                _imprimeEnImpresora = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/rutaReporteCrystal[@tipo='default']/imprime/text()").Value;
+                _nombreImpresora = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/rutaReporteCrystal[@tipo='default']/nombreImpresora/text()").Value;
 
                 _rutaReporteSSRS = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/ReporteSSRS[@tipo='default']/Ruta/text()").Value;
                 _SSRSServer = elemento.SelectSingleNode("//compannia[@bd='" + IdCompannia + "']/ReporteSSRS[@tipo='default']/SSRSServer/text()").Value;
@@ -290,6 +294,35 @@ namespace Comun
             }
         }
 
+        public bool ImprimeEnImpresora
+        {
+            get
+            {
+                return _imprimeEnImpresora.Equals("1");
+            }
+
+            set
+            {
+                if (value)
+                    _imprimeEnImpresora = "1";
+                else
+                    _imprimeEnImpresora = "0";
+            }
+        }
+
+        public string NombreImpresora
+        {
+            get
+            {
+                return _nombreImpresora;
+            }
+
+            set
+            {
+                _nombreImpresora = value;
+            }
+        }
+
         public string rutaReporteSSRS
         {
             get { return _rutaReporteSSRS; }
@@ -421,5 +454,6 @@ namespace Comun
         {
             get { return _emailAdjImprm; }
         }
+
     }
 }

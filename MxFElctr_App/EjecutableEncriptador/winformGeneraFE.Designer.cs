@@ -31,6 +31,12 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(winformGeneraFE));
             this.dgridTrxFacturas = new System.Windows.Forms.DataGridView();
+            this.Mark = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EstadoContabilizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Voidstts = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eBinAct = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbBIdDoc = new System.Windows.Forms.ComboBox();
             this.cmbBEstado = new System.Windows.Forms.ComboBox();
             this.checkBoxEstado = new System.Windows.Forms.CheckBox();
@@ -98,9 +104,10 @@
             this.checkBoxMark = new System.Windows.Forms.CheckBox();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.pBarProcesoActivo = new System.Windows.Forms.ProgressBar();
-            this.vwCfdTransaccionesDeVentaBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.Mark = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Docid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tsddButtonImprimir = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsTextDesde = new System.Windows.Forms.ToolStripTextBox();
+            this.tsTextHasta = new System.Windows.Forms.ToolStripTextBox();
+            this.tsMenuImprimir = new System.Windows.Forms.ToolStripMenuItem();
             this.soptypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sopnumbeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechahoraDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -109,10 +116,7 @@
             this.totalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.estadoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mensajeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EstadoContabilizado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Voidstts = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MensajeEA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eBinAct = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.vwCfdTransaccionesDeVentaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgridTrxFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.toolStripAccionesXML.SuspendLayout();
@@ -164,6 +168,63 @@
             this.dgridTrxFacturas.Size = new System.Drawing.Size(907, 315);
             this.dgridTrxFacturas.TabIndex = 50;
             this.dgridTrxFacturas.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgridTrxFacturas_RowPostPaint_1);
+            // 
+            // Mark
+            // 
+            this.Mark.FalseValue = "0";
+            this.Mark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Mark.Frozen = true;
+            this.Mark.HeaderText = "M";
+            this.Mark.IndeterminateValue = "-1";
+            this.Mark.Name = "Mark";
+            this.Mark.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Mark.TrueValue = "1";
+            this.Mark.Width = 20;
+            // 
+            // Docid
+            // 
+            this.Docid.DataPropertyName = "Docid";
+            this.Docid.Frozen = true;
+            this.Docid.HeaderText = "Id Doc.";
+            this.Docid.Name = "Docid";
+            this.Docid.ReadOnly = true;
+            this.Docid.Width = 50;
+            // 
+            // EstadoContabilizado
+            // 
+            this.EstadoContabilizado.DataPropertyName = "EstadoContabilizado";
+            this.EstadoContabilizado.Frozen = true;
+            this.EstadoContabilizado.HeaderText = "Estado Contab.";
+            this.EstadoContabilizado.Name = "EstadoContabilizado";
+            this.EstadoContabilizado.Visible = false;
+            // 
+            // Voidstts
+            // 
+            this.Voidstts.DataPropertyName = "Voidstts";
+            this.Voidstts.Frozen = true;
+            this.Voidstts.HeaderText = "Anulado";
+            this.Voidstts.Name = "Voidstts";
+            this.Voidstts.Visible = false;
+            // 
+            // MensajeEA
+            // 
+            this.MensajeEA.DataPropertyName = "MensajeEA";
+            this.MensajeEA.Frozen = true;
+            this.MensajeEA.HeaderText = "Observaciones";
+            this.MensajeEA.Name = "MensajeEA";
+            this.MensajeEA.Width = 180;
+            // 
+            // eBinAct
+            // 
+            this.eBinAct.DataPropertyName = "EstadoActual";
+            this.eBinAct.Frozen = true;
+            this.eBinAct.HeaderText = "E";
+            this.eBinAct.Name = "eBinAct";
+            this.eBinAct.ReadOnly = true;
+            this.eBinAct.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.eBinAct.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.eBinAct.Visible = false;
+            this.eBinAct.Width = 20;
             // 
             // cmbBIdDoc
             // 
@@ -384,7 +445,7 @@
             // 
             this.genFacturaElectrónicaV10ToolStripMenuItem.Name = "genFacturaElectrónicaV10ToolStripMenuItem";
             this.genFacturaElectrónicaV10ToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Factura Electrónica CFDI v. 6.2.8";
+            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Factura Electrónica CFDI v. 6.3.0";
             // 
             // toolStripMenuItem2
             // 
@@ -443,6 +504,7 @@
             this.toolStripImpresion.AutoSize = false;
             this.toolStripImpresion.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStripImpresion.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsddButtonImprimir,
             this.tsButtonImprimir});
             this.toolStripImpresion.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStripImpresion.Location = new System.Drawing.Point(292, 0);
@@ -453,11 +515,12 @@
             // 
             // tsButtonImprimir
             // 
+            this.tsButtonImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsButtonImprimir.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonImprimir.Image")));
             this.tsButtonImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsButtonImprimir.Name = "tsButtonImprimir";
-            this.tsButtonImprimir.Size = new System.Drawing.Size(73, 20);
-            this.tsButtonImprimir.Text = "Imprimir";
+            this.tsButtonImprimir.Size = new System.Drawing.Size(78, 19);
+            this.tsButtonImprimir.Text = "Impr. Rápida";
             this.tsButtonImprimir.Click += new System.EventHandler(this.tsButtonImprimir_Click);
             // 
             // toolStripConsulta
@@ -724,6 +787,7 @@
             this.tsBtnConfiguraMsj.Name = "tsBtnConfiguraMsj";
             this.tsBtnConfiguraMsj.Size = new System.Drawing.Size(71, 20);
             this.tsBtnConfiguraMsj.Text = "Mensaje";
+            this.tsBtnConfiguraMsj.Visible = false;
             // 
             // toolStripEmail
             // 
@@ -895,30 +959,42 @@
             this.pBarProcesoActivo.TabIndex = 40;
             this.pBarProcesoActivo.Visible = false;
             // 
-            // vwCfdTransaccionesDeVentaBindingSource
+            // tsddButtonImprimir
             // 
-            this.vwCfdTransaccionesDeVentaBindingSource.DataSource = typeof(EjecutableEncriptador.vwCfdTransaccionesDeVenta);
+            this.tsddButtonImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsddButtonImprimir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsTextDesde,
+            this.tsTextHasta,
+            this.tsMenuImprimir});
+            this.tsddButtonImprimir.Image = ((System.Drawing.Image)(resources.GetObject("tsddButtonImprimir.Image")));
+            this.tsddButtonImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddButtonImprimir.Name = "tsddButtonImprimir";
+            this.tsddButtonImprimir.Size = new System.Drawing.Size(29, 20);
+            this.tsddButtonImprimir.Text = "Imprimir2";
+            this.tsddButtonImprimir.ToolTipText = "Imprimir";
+            this.tsddButtonImprimir.Click += new System.EventHandler(this.tsddButtonImprimir_Click);
             // 
-            // Mark
+            // tsTextDesde
             // 
-            this.Mark.FalseValue = "0";
-            this.Mark.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Mark.Frozen = true;
-            this.Mark.HeaderText = "M";
-            this.Mark.IndeterminateValue = "-1";
-            this.Mark.Name = "Mark";
-            this.Mark.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Mark.TrueValue = "1";
-            this.Mark.Width = 20;
+            this.tsTextDesde.Name = "tsTextDesde";
+            this.tsTextDesde.Size = new System.Drawing.Size(100, 23);
+            this.tsTextDesde.Text = "Desde";
+            this.tsTextDesde.ToolTipText = "Desde factura";
             // 
-            // Docid
+            // tsTextHasta
             // 
-            this.Docid.DataPropertyName = "Docid";
-            this.Docid.Frozen = true;
-            this.Docid.HeaderText = "Id Doc.";
-            this.Docid.Name = "Docid";
-            this.Docid.ReadOnly = true;
-            this.Docid.Width = 50;
+            this.tsTextHasta.Name = "tsTextHasta";
+            this.tsTextHasta.Size = new System.Drawing.Size(100, 23);
+            this.tsTextHasta.Text = "Hasta";
+            // 
+            // tsMenuImprimir
+            // 
+            this.tsMenuImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsMenuImprimir.Name = "tsMenuImprimir";
+            this.tsMenuImprimir.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded;
+            this.tsMenuImprimir.Size = new System.Drawing.Size(160, 22);
+            this.tsMenuImprimir.Text = "Imprimir";
+            this.tsMenuImprimir.Click += new System.EventHandler(this.tsMenuImprimir_Click);
             // 
             // soptypeDataGridViewTextBoxColumn
             // 
@@ -991,41 +1067,9 @@
             this.mensajeDataGridViewTextBoxColumn.HeaderText = "Mensaje";
             this.mensajeDataGridViewTextBoxColumn.Name = "mensajeDataGridViewTextBoxColumn";
             // 
-            // EstadoContabilizado
+            // vwCfdTransaccionesDeVentaBindingSource
             // 
-            this.EstadoContabilizado.DataPropertyName = "EstadoContabilizado";
-            this.EstadoContabilizado.Frozen = true;
-            this.EstadoContabilizado.HeaderText = "Estado Contab.";
-            this.EstadoContabilizado.Name = "EstadoContabilizado";
-            this.EstadoContabilizado.Visible = false;
-            // 
-            // Voidstts
-            // 
-            this.Voidstts.DataPropertyName = "Voidstts";
-            this.Voidstts.Frozen = true;
-            this.Voidstts.HeaderText = "Anulado";
-            this.Voidstts.Name = "Voidstts";
-            this.Voidstts.Visible = false;
-            // 
-            // MensajeEA
-            // 
-            this.MensajeEA.DataPropertyName = "MensajeEA";
-            this.MensajeEA.Frozen = true;
-            this.MensajeEA.HeaderText = "Observaciones";
-            this.MensajeEA.Name = "MensajeEA";
-            this.MensajeEA.Width = 180;
-            // 
-            // eBinAct
-            // 
-            this.eBinAct.DataPropertyName = "EstadoActual";
-            this.eBinAct.Frozen = true;
-            this.eBinAct.HeaderText = "E";
-            this.eBinAct.Name = "eBinAct";
-            this.eBinAct.ReadOnly = true;
-            this.eBinAct.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.eBinAct.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.eBinAct.Visible = false;
-            this.eBinAct.Width = 20;
+            this.vwCfdTransaccionesDeVentaBindingSource.DataSource = typeof(EjecutableEncriptador.vwCfdTransaccionesDeVenta);
             // 
             // winformGeneraFE
             // 
@@ -1164,6 +1208,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Voidstts;
         private System.Windows.Forms.DataGridViewTextBoxColumn MensajeEA;
         private System.Windows.Forms.DataGridViewTextBoxColumn eBinAct;
+        private System.Windows.Forms.ToolStripDropDownButton tsddButtonImprimir;
+        private System.Windows.Forms.ToolStripTextBox tsTextDesde;
+        private System.Windows.Forms.ToolStripTextBox tsTextHasta;
+        private System.Windows.Forms.ToolStripMenuItem tsMenuImprimir;
     }
 }
 
