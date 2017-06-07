@@ -253,12 +253,17 @@ namespace EjecutableEncriptador
 
             Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
             estadoCompletadoCia = configCfd.intEstadoCompletado;
+
             if (!configCfd.ultimoMensaje.Equals(string.Empty))
             {
                 txtbxMensajes.AppendText(configCfd.ultimoMensaje);
                 HabilitarVentana(false,false,false,false,false, true);
                 return;
             }
+
+            tsComboDestinoRep.Text = "Pantalla";
+            if (configCfd.ImprimeEnImpresora)
+                tsComboDestinoRep.Text = "Impresora";
 
             HabilitarVentana(configCfd.emite, configCfd.anula, configCfd.imprime, configCfd.publica, configCfd.envia, true);
             AplicaFiltroYActualizaPantalla();
@@ -530,9 +535,11 @@ namespace EjecutableEncriptador
             string prmTabla = "SOP30200";
             int prmSopType = 0;
             Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
-            //string Binario = Convert.ToString(configCfd.estadoBinario, 2);
             txtbxMensajes.Text = "";
             txtbxMensajes.Refresh();
+            configCfd.ImprimeEnImpresora = false;
+            if (tsComboDestinoRep.Text.Equals("Impresora"))
+                configCfd.ImprimeEnImpresora = true;
 
             if (dgridTrxFacturas.CurrentRow != null)
             {
@@ -831,11 +838,12 @@ namespace EjecutableEncriptador
             Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
             txtbxMensajes.Text = "";
             txtbxMensajes.Refresh();
+            configCfd.ImprimeEnImpresora = false;
+            if (tsComboDestinoRep.Text.Equals("Impresora"))
+                configCfd.ImprimeEnImpresora = true;
 
-            if (dgridTrxFacturas.CurrentRow != null)
+            if (dgridTrxFacturas.CurrentRow != null && dgridTrxFacturas.CurrentCell.Selected)
             {
-                if (dgridTrxFacturas.CurrentCell.Selected)
-                {
                     prmFolioDesde = tsTextDesde.Text;
                     prmFolioHasta = tsTextHasta.Text;
                     prmSopType = Convert.ToInt16(dgridTrxFacturas.CurrentRow.Cells[idxSoptype].Value.ToString());
@@ -883,20 +891,20 @@ namespace EjecutableEncriptador
                     FrmVisorDeReporte.Show();
                     FrmVisorDeReporte.Activate();
                     txtbxMensajes.Text = FrmVisorDeReporte.mensajeErr;
-                }
-                else
-                    txtbxMensajes.Text = "No seleccionó ninguna factura. Debe marcar la factura que desea imprimir y luego presionar el botón de impresión.";
             }
             else
                 txtbxMensajes.Text = "No seleccionó ninguna factura. Debe marcar la factura que desea imprimir y luego presionar el botón de impresión.";
-
         }
 
         private void tsddButtonImprimir_Click(object sender, EventArgs e)
         {
-            //Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
+            Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
             txtbxMensajes.Text = "";
             txtbxMensajes.Refresh();
+
+            tsComboDestinoRep.Enabled = false;
+            if (!configCfd.emite && configCfd.reporteador.Equals("CRYSTAL"))    //Se habilitó esta opción porque el visor de crystal no puede imprimir. 
+                tsComboDestinoRep.Enabled = true;
 
             if (dgridTrxFacturas.CurrentRow != null)
             {

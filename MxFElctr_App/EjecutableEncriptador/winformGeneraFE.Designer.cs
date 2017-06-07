@@ -66,6 +66,10 @@
             this.toolStripAccionesXML = new System.Windows.Forms.ToolStrip();
             this.tsButtonGenerar = new System.Windows.Forms.ToolStripButton();
             this.toolStripImpresion = new System.Windows.Forms.ToolStrip();
+            this.tsddButtonImprimir = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsTextDesde = new System.Windows.Forms.ToolStripTextBox();
+            this.tsTextHasta = new System.Windows.Forms.ToolStripTextBox();
+            this.tsMenuImprimir = new System.Windows.Forms.ToolStripMenuItem();
             this.tsButtonImprimir = new System.Windows.Forms.ToolStripButton();
             this.toolStripConsulta = new System.Windows.Forms.ToolStrip();
             this.tsDDButtonFiltroF = new System.Windows.Forms.ToolStripDropDownButton();
@@ -104,10 +108,7 @@
             this.checkBoxMark = new System.Windows.Forms.CheckBox();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.pBarProcesoActivo = new System.Windows.Forms.ProgressBar();
-            this.tsddButtonImprimir = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsTextDesde = new System.Windows.Forms.ToolStripTextBox();
-            this.tsTextHasta = new System.Windows.Forms.ToolStripTextBox();
-            this.tsMenuImprimir = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsComboDestinoRep = new System.Windows.Forms.ToolStripComboBox();
             this.soptypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sopnumbeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechahoraDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -513,14 +514,52 @@
             this.toolStripImpresion.TabIndex = 60;
             this.toolStripImpresion.Text = "toolStrip2";
             // 
+            // tsddButtonImprimir
+            // 
+            this.tsddButtonImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsddButtonImprimir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsComboDestinoRep,
+            this.tsTextDesde,
+            this.tsTextHasta,
+            this.tsMenuImprimir});
+            this.tsddButtonImprimir.Image = ((System.Drawing.Image)(resources.GetObject("tsddButtonImprimir.Image")));
+            this.tsddButtonImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsddButtonImprimir.Name = "tsddButtonImprimir";
+            this.tsddButtonImprimir.Size = new System.Drawing.Size(29, 20);
+            this.tsddButtonImprimir.Text = "Imprimir2";
+            this.tsddButtonImprimir.ToolTipText = "Imprimir";
+            this.tsddButtonImprimir.Click += new System.EventHandler(this.tsddButtonImprimir_Click);
+            // 
+            // tsTextDesde
+            // 
+            this.tsTextDesde.Name = "tsTextDesde";
+            this.tsTextDesde.Size = new System.Drawing.Size(100, 23);
+            this.tsTextDesde.Text = "Desde";
+            this.tsTextDesde.ToolTipText = "Desde factura";
+            // 
+            // tsTextHasta
+            // 
+            this.tsTextHasta.Name = "tsTextHasta";
+            this.tsTextHasta.Size = new System.Drawing.Size(100, 23);
+            this.tsTextHasta.Text = "Hasta";
+            // 
+            // tsMenuImprimir
+            // 
+            this.tsMenuImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsMenuImprimir.Name = "tsMenuImprimir";
+            this.tsMenuImprimir.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded;
+            this.tsMenuImprimir.Size = new System.Drawing.Size(181, 22);
+            this.tsMenuImprimir.Text = "Imprimir";
+            this.tsMenuImprimir.Click += new System.EventHandler(this.tsMenuImprimir_Click);
+            // 
             // tsButtonImprimir
             // 
             this.tsButtonImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsButtonImprimir.Image = ((System.Drawing.Image)(resources.GetObject("tsButtonImprimir.Image")));
             this.tsButtonImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsButtonImprimir.Name = "tsButtonImprimir";
-            this.tsButtonImprimir.Size = new System.Drawing.Size(78, 19);
-            this.tsButtonImprimir.Text = "Impr. Rápida";
+            this.tsButtonImprimir.Size = new System.Drawing.Size(67, 19);
+            this.tsButtonImprimir.Text = "Ver factura";
             this.tsButtonImprimir.Click += new System.EventHandler(this.tsButtonImprimir_Click);
             // 
             // toolStripConsulta
@@ -959,42 +998,15 @@
             this.pBarProcesoActivo.TabIndex = 40;
             this.pBarProcesoActivo.Visible = false;
             // 
-            // tsddButtonImprimir
+            // tsComboDestinoRep
             // 
-            this.tsddButtonImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tsddButtonImprimir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsTextDesde,
-            this.tsTextHasta,
-            this.tsMenuImprimir});
-            this.tsddButtonImprimir.Image = ((System.Drawing.Image)(resources.GetObject("tsddButtonImprimir.Image")));
-            this.tsddButtonImprimir.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddButtonImprimir.Name = "tsddButtonImprimir";
-            this.tsddButtonImprimir.Size = new System.Drawing.Size(29, 20);
-            this.tsddButtonImprimir.Text = "Imprimir2";
-            this.tsddButtonImprimir.ToolTipText = "Imprimir";
-            this.tsddButtonImprimir.Click += new System.EventHandler(this.tsddButtonImprimir_Click);
-            // 
-            // tsTextDesde
-            // 
-            this.tsTextDesde.Name = "tsTextDesde";
-            this.tsTextDesde.Size = new System.Drawing.Size(100, 23);
-            this.tsTextDesde.Text = "Desde";
-            this.tsTextDesde.ToolTipText = "Desde factura";
-            // 
-            // tsTextHasta
-            // 
-            this.tsTextHasta.Name = "tsTextHasta";
-            this.tsTextHasta.Size = new System.Drawing.Size(100, 23);
-            this.tsTextHasta.Text = "Hasta";
-            // 
-            // tsMenuImprimir
-            // 
-            this.tsMenuImprimir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsMenuImprimir.Name = "tsMenuImprimir";
-            this.tsMenuImprimir.Overflow = System.Windows.Forms.ToolStripItemOverflow.AsNeeded;
-            this.tsMenuImprimir.Size = new System.Drawing.Size(160, 22);
-            this.tsMenuImprimir.Text = "Imprimir";
-            this.tsMenuImprimir.Click += new System.EventHandler(this.tsMenuImprimir_Click);
+            this.tsComboDestinoRep.Enabled = false;
+            this.tsComboDestinoRep.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tsComboDestinoRep.Items.AddRange(new object[] {
+            "Pantalla",
+            "Impresora"});
+            this.tsComboDestinoRep.Name = "tsComboDestinoRep";
+            this.tsComboDestinoRep.Size = new System.Drawing.Size(121, 23);
             // 
             // soptypeDataGridViewTextBoxColumn
             // 
@@ -1212,6 +1224,7 @@
         private System.Windows.Forms.ToolStripTextBox tsTextDesde;
         private System.Windows.Forms.ToolStripTextBox tsTextHasta;
         private System.Windows.Forms.ToolStripMenuItem tsMenuImprimir;
+        private System.Windows.Forms.ToolStripComboBox tsComboDestinoRep;
     }
 }
 
