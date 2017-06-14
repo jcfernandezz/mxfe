@@ -899,6 +899,11 @@ namespace EjecutableEncriptador
         private void tsddButtonImprimir_Click(object sender, EventArgs e)
         {
             Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
+
+            var pdialago = new System.Windows.Forms.PrintDialog();
+            configCfd.NombreImpresora = pdialago.PrinterSettings.PrinterName;
+            tsComboDestinoRep.ToolTipText = configCfd.NombreImpresora;
+
             txtbxMensajes.Text = "";
             txtbxMensajes.Refresh();
 

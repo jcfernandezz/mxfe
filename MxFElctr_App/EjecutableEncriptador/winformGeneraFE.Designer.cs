@@ -67,6 +67,7 @@
             this.tsButtonGenerar = new System.Windows.Forms.ToolStripButton();
             this.toolStripImpresion = new System.Windows.Forms.ToolStrip();
             this.tsddButtonImprimir = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsComboDestinoRep = new System.Windows.Forms.ToolStripComboBox();
             this.tsTextDesde = new System.Windows.Forms.ToolStripTextBox();
             this.tsTextHasta = new System.Windows.Forms.ToolStripTextBox();
             this.tsMenuImprimir = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,7 +109,6 @@
             this.checkBoxMark = new System.Windows.Forms.CheckBox();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.pBarProcesoActivo = new System.Windows.Forms.ProgressBar();
-            this.tsComboDestinoRep = new System.Windows.Forms.ToolStripComboBox();
             this.soptypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sopnumbeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fechahoraDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -414,7 +414,7 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(152, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(244, 24);
             this.menuStrip1.TabIndex = 14;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -446,7 +446,7 @@
             // 
             this.genFacturaElectrónicaV10ToolStripMenuItem.Name = "genFacturaElectrónicaV10ToolStripMenuItem";
             this.genFacturaElectrónicaV10ToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Factura Electrónica CFDI v. 6.3.0";
+            this.genFacturaElectrónicaV10ToolStripMenuItem.Text = "Factura Electrónica CFDI v. 6.3.1";
             // 
             // toolStripMenuItem2
             // 
@@ -529,6 +529,16 @@
             this.tsddButtonImprimir.Text = "Imprimir2";
             this.tsddButtonImprimir.ToolTipText = "Imprimir";
             this.tsddButtonImprimir.Click += new System.EventHandler(this.tsddButtonImprimir_Click);
+            // 
+            // tsComboDestinoRep
+            // 
+            this.tsComboDestinoRep.Enabled = false;
+            this.tsComboDestinoRep.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.tsComboDestinoRep.Items.AddRange(new object[] {
+            "Pantalla",
+            "Impresora"});
+            this.tsComboDestinoRep.Name = "tsComboDestinoRep";
+            this.tsComboDestinoRep.Size = new System.Drawing.Size(121, 23);
             // 
             // tsTextDesde
             // 
@@ -997,16 +1007,6 @@
             this.pBarProcesoActivo.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.pBarProcesoActivo.TabIndex = 40;
             this.pBarProcesoActivo.Visible = false;
-            // 
-            // tsComboDestinoRep
-            // 
-            this.tsComboDestinoRep.Enabled = false;
-            this.tsComboDestinoRep.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.tsComboDestinoRep.Items.AddRange(new object[] {
-            "Pantalla",
-            "Impresora"});
-            this.tsComboDestinoRep.Name = "tsComboDestinoRep";
-            this.tsComboDestinoRep.Size = new System.Drawing.Size(121, 23);
             // 
             // soptypeDataGridViewTextBoxColumn
             // 

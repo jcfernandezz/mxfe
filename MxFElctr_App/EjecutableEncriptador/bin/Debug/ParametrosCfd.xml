@@ -133,7 +133,7 @@
         <Nombre>sTabla</Nombre>
         <Tipo>string</Tipo>
       </Parametro>
-	  <imprime>1</imprime>
+	  <imprime>0</imprime>
 	  <nombreImpresora>Microsoft XPS Document Writer</nombreImpresora>
     </rutaReporteCrystal>
     <ReporteSSRS tipo="default">
