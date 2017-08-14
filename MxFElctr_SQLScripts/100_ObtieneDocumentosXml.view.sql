@@ -165,8 +165,9 @@ returns xml
 as
 --Propósito. Obtiene las líneas de una factura en formato xml para CFDI
 --			Elimina carriage returns, line feeds, tabs, secuencias de espacios y caracteres especiales.
---23/4/12 jcf Creación
---25/7/12 jcf Modifica unidad de medida: usa UOFMsat.
+--23/04/12 jcf Creación
+--25/07/12 jcf Modifica unidad de medida: usa UOFMsat.
+--14/08/14 jcf El importe debe ser distinto de cero (Achilles)
 --
 begin
 	declare @cncp xml;
@@ -188,6 +189,7 @@ begin
 		where CMPNTSEQ = 0					--a nivel kit
 		and Concepto.soptype = @p_soptype
 		and Concepto.sopnumbe = @p_sopnumbe
+		and Concepto.importe != 0          
 		FOR XML path('cfdi:Concepto'), type, root('cfdi:Conceptos')
 	)
 	return @cncp
@@ -482,7 +484,7 @@ IF (OBJECT_ID ('dbo.vwCfdDocumentosAImprimir', 'V') IS NULL)
    exec('create view dbo.vwCfdDocumentosAImprimir as SELECT 1 as t');
 go
 
-alter view dbo.vwCfdDocumentosAImprimir as
+create view dbo.vwCfdDocumentosAImprimir as
 --Propósito. Lista los documentos de venta que están listos para imprimirse: facturas y notas de crédito. 
 --			Incluye los datos del cfdi.
 --07/05/12 jcf Creación
