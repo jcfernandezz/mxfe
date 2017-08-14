@@ -253,12 +253,17 @@ namespace EjecutableEncriptador
 
             Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
             estadoCompletadoCia = configCfd.intEstadoCompletado;
+
             if (!configCfd.ultimoMensaje.Equals(string.Empty))
             {
                 txtbxMensajes.AppendText(configCfd.ultimoMensaje);
                 HabilitarVentana(false,false,false,false,false, true);
                 return;
             }
+
+            tsComboDestinoRep.Text = "Pantalla";
+            if (configCfd.ImprimeEnImpresora)
+                tsComboDestinoRep.Text = "Impresora";
 
             HabilitarVentana(configCfd.emite, configCfd.anula, configCfd.imprime, configCfd.publica, configCfd.envia, true);
             AplicaFiltroYActualizaPantalla();
@@ -530,9 +535,11 @@ namespace EjecutableEncriptador
             string prmTabla = "SOP30200";
             int prmSopType = 0;
             Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
-            //string Binario = Convert.ToString(configCfd.estadoBinario, 2);
             txtbxMensajes.Text = "";
             txtbxMensajes.Refresh();
+            configCfd.ImprimeEnImpresora = false;
+            if (tsComboDestinoRep.Text.Equals("Impresora"))
+                configCfd.ImprimeEnImpresora = true;
 
             if (dgridTrxFacturas.CurrentRow != null)
             {
@@ -822,6 +829,100 @@ namespace EjecutableEncriptador
 
         }
 
+        private void tsMenuImprimir_Click(object sender, EventArgs e)
+        {
+            string prmFolioDesde = "";
+            string prmFolioHasta = "";
+            string prmTabla = "SOP30200";
+            int prmSopType = 0;
+            Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
+            txtbxMensajes.Text = "";
+            txtbxMensajes.Refresh();
+            configCfd.ImprimeEnImpresora = false;
+            if (tsComboDestinoRep.Text.Equals("Impresora"))
+                configCfd.ImprimeEnImpresora = true;
 
-     }
+            if (dgridTrxFacturas.CurrentRow != null && dgridTrxFacturas.CurrentCell.Selected)
+            {
+                    prmFolioDesde = tsTextDesde.Text;
+                    prmFolioHasta = tsTextHasta.Text;
+                    prmSopType = Convert.ToInt16(dgridTrxFacturas.CurrentRow.Cells[idxSoptype].Value.ToString());
+
+                    //En el caso de una compañía que debe emitir xml, controlar que la factura ha sido emitida antes de imprimir.
+                    if (configCfd.emite)
+                    {
+                        if (!dgridTrxFacturas.CurrentRow.Cells[idxEstado].Value.Equals("emitido"))      //estado FE
+                        {
+                            txtbxMensajes.Text = "La factura " + prmFolioDesde + " no fue emitida. Emita la factura y vuelva a intentar.\r\n";
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        if (dgridTrxFacturas.CurrentRow.Cells[idxAnulado].Value.ToString().Equals("1")) //factura anulada en GP
+                        {
+                            txtbxMensajes.Text = "La factura " + prmFolioDesde + " no se puede imprimir porque está anulada. \r\n";
+                            return;
+                        }
+                        if (dgridTrxFacturas.CurrentRow.Cells[idxEstadoContab].Value.Equals("en lote")) //estado contabilizado en GP
+                            prmTabla = "SOP10100";
+                    }
+
+                    if (FrmVisorDeReporte == null)
+                    {
+                        try
+                        {
+                            FrmVisorDeReporte = new winVisorDeReportes(DatosConexionDB.Elemento, configCfd, prmFolioDesde, prmFolioHasta, prmTabla, prmSopType);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        if (FrmVisorDeReporte.Created == false)
+                        {
+                            FrmVisorDeReporte = new winVisorDeReportes(DatosConexionDB.Elemento, configCfd, prmFolioDesde, prmFolioHasta, prmTabla, prmSopType);
+                        }
+                    }
+
+                    // Always show and activate the WinForm
+                    FrmVisorDeReporte.Show();
+                    FrmVisorDeReporte.Activate();
+                    txtbxMensajes.Text = FrmVisorDeReporte.mensajeErr;
+            }
+            else
+                txtbxMensajes.Text = "No seleccionó ninguna factura. Debe marcar la factura que desea imprimir y luego presionar el botón de impresión.";
+        }
+
+        private void tsddButtonImprimir_Click(object sender, EventArgs e)
+        {
+            Parametros configCfd = new Parametros(DatosConexionDB.Elemento.Intercompany);   //Carga configuración desde xml
+
+            var pdialago = new System.Windows.Forms.PrintDialog();
+            configCfd.NombreImpresora = pdialago.PrinterSettings.PrinterName;
+            tsComboDestinoRep.ToolTipText = configCfd.NombreImpresora;
+
+            txtbxMensajes.Text = "";
+            txtbxMensajes.Refresh();
+
+            tsComboDestinoRep.Enabled = false;
+            if (!configCfd.emite && configCfd.reporteador.Equals("CRYSTAL"))    //Se habilitó esta opción porque el visor de crystal no puede imprimir. 
+                tsComboDestinoRep.Enabled = true;
+
+            if (dgridTrxFacturas.CurrentRow != null)
+            {
+                if (dgridTrxFacturas.CurrentCell.Selected)
+                {
+                    tsTextDesde.Text = dgridTrxFacturas.CurrentRow.Cells[idxSopnumbe].Value.ToString();
+                    tsTextHasta.Text = dgridTrxFacturas.CurrentRow.Cells[idxSopnumbe].Value.ToString();
+
+                }
+                else
+                    txtbxMensajes.Text = "No seleccionó ninguna factura. Debe marcar la factura que desea imprimir y luego presionar el botón de impresión.";
+            }
+
+        }
+    }
 }

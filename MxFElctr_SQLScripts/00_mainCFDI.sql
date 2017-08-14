@@ -36,6 +36,8 @@ PRINT 'Creando objetos para factura electrónica CFDI'
 :On Error exit
 :r $(workpath)\70_CreaLogFacturaElectronica.table.sql
 :On Error exit
+:r $(workpath)\72_fcfdDatosXmlParaImpresion.function.sql
+:On Error exit
 :r $(workpath)\80_ABMcfdLogFacturaXML.sprocedure.sql
 :On Error exit
 :r $(workpath)\83_UtilesYConfiguracion.view.sql

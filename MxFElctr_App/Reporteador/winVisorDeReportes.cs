@@ -75,6 +75,7 @@ namespace Reporteador
                 mensajeErr = reporteCrystal.ultimoMensaje;
                 numErr = reporteCrystal.numError;
                 crViewerCfd.Refresh();
+
             }
             if (_Configuracion.reporteador.Equals("SSRS"))
             {

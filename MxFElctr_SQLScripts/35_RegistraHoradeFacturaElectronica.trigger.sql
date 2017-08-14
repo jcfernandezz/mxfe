@@ -48,13 +48,14 @@ AS
 --			Considerar que en México hay una diferencia de 2 o 3 horas dependiendo de la estación.
 --			Esto implica que si un usuario ingresa una factura entre hrs 24 y hrs 3 del día siguiente de Argentina, la hora será siempre menor a 3.
 --21/11/16 jcf Parametriza la diferencia horaria en CFDIDIFHORA
+--31/07/17 JCF El parámetro está en la dirección PRINCIPAL
 --
 begin try
 
 	DECLARE @horaMex int;
     set @horaMex = 0;
 	select @horaMex = case when isnumeric(PARAM1) = 1 then convert(int, param1) else 0 end
-	from dbo.fCfdiParametros('CFDIDIFHORA', '-', '-', '-', '-', '-', 'MAIN');
+	from dbo.fCfdiParametros('CFDIDIFHORA', '-', '-', '-', '-', '-', 'PRINCIPAL');
 
 	UPDATE dbo.SOP10100 set DOCNCORR = 
 				case when datepart(hh, getdate()) <= @horaMex then

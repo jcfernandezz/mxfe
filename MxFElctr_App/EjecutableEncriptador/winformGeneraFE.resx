@@ -148,6 +148,40 @@
     <value>623, 13</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsddButtonImprimir.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        puwAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="tsButtonImprimir.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -262,18 +296,6 @@
         TgDQASA1MVpwzwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="toolStripEmailMas.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>484, 43</value>
-  </metadata>
-  <metadata name="toolStripEmail.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>364, 43</value>
-  </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>265, 43</value>
-  </metadata>
-  <metadata name="toolStripPDF.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>152, 43</value>
-  </metadata>
   <metadata name="toolStripEmailMas.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>484, 43</value>
   </metadata>
