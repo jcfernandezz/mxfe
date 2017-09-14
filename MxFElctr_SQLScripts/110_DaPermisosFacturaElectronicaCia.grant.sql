@@ -5,7 +5,7 @@
 --24/05/11 JCF Creación
 --
 -----------------------------------------------------------------------------------
---use [COMPAÑIA]
+--use arg10
 
 IF DATABASE_PRINCIPAL_ID('rol_cfdigital') IS NULL
 	create role rol_cfdigital;
