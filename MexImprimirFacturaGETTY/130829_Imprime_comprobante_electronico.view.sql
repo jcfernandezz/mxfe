@@ -1,4 +1,22 @@
+IF not EXISTS (SELECT 1 FROM dbo.sysobjects WHERE id = OBJECT_ID(N'dbo.INT_SOPHDR') AND OBJECTPROPERTY(id,N'IsTable') = 1)
+begin
+	CREATE TABLE [dbo].[INT_SOPHDR](
+		[SOPTYPE] [smallint] NOT NULL,
+		[SOPNUMBE] [char](21) NOT NULL,
+		[INTEGRATIONID] [int] NULL,
+		[DOCAMNT] [numeric](19, 5) NULL,
+		[TAXAMNT] [numeric](19, 5) NULL,
+		[memo] [char](255) NOT NULL,
+	 CONSTRAINT [PK_INT_SOPHDR] PRIMARY KEY CLUSTERED 
+	(
+		[SOPTYPE] ASC,
+		[SOPNUMBE] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+end
 
+GO
+--------------------------------------------------------------------------------------------------------------------------------------------
 
 create VIEW [dbo].[IMPRIME_COMPROBANTE_ELECTRONICO]
 AS
@@ -148,6 +166,8 @@ FROM SOP30200 A
 	LEFT OUTER JOIN SY03300 I ON A.PYMTRMID = I.PYMTRMID
 	--WHERE A.DOCDATE >= DATEADD(m, -2, CONVERT(CHAR(8), GETDATE(), 112))
 GO
---sp_columns [IMPRIME_COMPROBANTE_ELECTRONICO]
+
+grant select on dbo.IMPRIME_COMPROBANTE_ELECTRONICO to rol_cfdigital, dyngrp;
+GO
 
 

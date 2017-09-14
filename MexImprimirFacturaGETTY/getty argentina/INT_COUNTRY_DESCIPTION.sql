@@ -1,0 +1,22 @@
+USE arg10
+GO
+
+/****** Object:  View [dbo].[INT_COUNTRY_DESCIPTION]    Script Date: 01/09/2017 10:05:58 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE VIEW [dbo].[INT_COUNTRY_DESCIPTION]
+AS
+SELECT SOPTYPE, SOPNUMBE, LNITMSEQ, description
+FROM INT_SOPLINE_DATA A
+INNER JOIN INTDB2..ERP_Country_Description B
+ON A.MPUBCCODE = B.country_code
+WHERE language_code = 'en'
+
+GO
+
+

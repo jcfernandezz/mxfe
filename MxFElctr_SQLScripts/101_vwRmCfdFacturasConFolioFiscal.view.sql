@@ -1,13 +1,13 @@
-IF OBJECT_ID ('dbo.vwRmCfdFacturasConFolioFiscal') IS NOT NULL
+ï»¿IF OBJECT_ID ('dbo.vwRmCfdFacturasConFolioFiscal') IS NOT NULL
      DROP view dbo.vwRmCfdFacturasConFolioFiscal
 GO
 
 create view dbo.vwRmCfdFacturasConFolioFiscal as
---Propósito. Facturas con folio fiscal
---14/10/15 jcf Creación
+--PropÃ³sito. Facturas con folio fiscal
+--14/10/15 jcf CreaciÃ³n
 --
 select 
-	rm.rmdtypal, rm.tipoDoc, rm.soptype, rm.docdate, rm.docnumbr, rm.voidstts, case when rm.voidstts = 1 then 'sí' else 'no' end anulado, 
+	rm.rmdtypal, rm.tipoDoc, rm.soptype, rm.docdate, rm.docnumbr, rm.voidstts, case when rm.voidstts = 1 then 'sÃ­' else 'no' end anulado, 
 	rm.custnmbr, rm.custname, rm.txrgnnum, rm.totalImpuesto, rm.totalDoc, rm.duedate, 
 	rm.curncyid, rm.curtrxam, rm.ortrxamt, rm.slsamnt, rm.cashamnt, rm.orctrxam, rm.ororgtrx, rm.xchgrate,
 	cfdi.uuid, cfdi.docid, cfdi.mensajeEA
@@ -21,8 +21,8 @@ where rmdtypal in (1, 8)	--facturas, devoluciones
 
 go
 
-IF (@@Error = 0) PRINT 'Creación exitosa de la vista: vwRmCfdFacturasConFolioFiscal'
-ELSE PRINT 'Error en la creación de la vista: vwRmCfdFacturasConFolioFiscal'
+IF (@@Error = 0) PRINT 'CreaciÃ³n exitosa de la vista: vwRmCfdFacturasConFolioFiscal'
+ELSE PRINT 'Error en la creaciÃ³n de la vista: vwRmCfdFacturasConFolioFiscal'
 GO
 
 --grant select on vwRmCfdFacturasConFolioFiscal to dyngrp;

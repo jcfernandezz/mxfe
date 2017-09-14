@@ -484,7 +484,7 @@ IF (OBJECT_ID ('dbo.vwCfdDocumentosAImprimir', 'V') IS NULL)
    exec('create view dbo.vwCfdDocumentosAImprimir as SELECT 1 as t');
 go
 
-create view dbo.vwCfdDocumentosAImprimir as
+alter view dbo.vwCfdDocumentosAImprimir as
 --Propósito. Lista los documentos de venta que están listos para imprimirse: facturas y notas de crédito. 
 --			Incluye los datos del cfdi.
 --07/05/12 jcf Creación
