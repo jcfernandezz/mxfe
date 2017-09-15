@@ -8,6 +8,7 @@ as
 --Propósito. Devuelve los parámetros de la compañía
 --Requisitos. Los @tagx deben configurarse en la ventana Información de internet del id de dirección @ADRSCODE de la compañía.
 --21/11/16 jcf Creación 
+--14/09/17 jcf Agrega inet7 y 8
 --
 return
 (
@@ -29,16 +30,18 @@ return
 		else 'no existe tag: '+@tag5 end param5,
 		CASE when charindex(@tag6+'=', ia.inetinfo) > 0 and  charindex(char(13), ia.inetinfo) > 0 then
 			substring(ia.inetinfo, charindex(@tag6+'=', ia.inetinfo)+ len(@tag6)+1, charindex(char(13), ia.inetinfo, charindex(@tag6+'=', ia.inetinfo)) - charindex(@tag6+'=', ia.inetinfo) - len(@tag6)-1)
-		else 'no existe tag: '+@tag6 end param6
-	from SY01200 ia						--coInetAddress Dirección de la compañía
-		CROSS join DYNAMICS..SY01500 ci	--sy_company_mstr 
-		inner join sy00600 lm			--sy_location_mstr
-		on ci.INTERID = DB_NAME()
-		and lm.CMPANYID = ci.CMPANYID
+		else 'no existe tag: '+@tag6 end param6,
+		ia.INET7, ia.INET8
+	from SY01200 ia					--coInetAddress Dirección de la compañía
+	inner join DYNAMICS..SY01500 ci	--sy_company_mstr 
+		on ia.Master_Type = 'CMP'
+		and ci.INTERID = DB_NAME()
+		and ia.Master_ID = ci.INTERID
+		and ia.ADRSCODE = @ADRSCODE
+	inner join sy00600 lm			--sy_location_mstr
+		on lm.CMPANYID = ci.CMPANYID
 		and lm.LOCATNID = ia.ADRSCODE
-	where ia.Master_Type = 'CMP'
-	and ia.Master_ID = ci.INTERID
-	and ia.ADRSCODE = @ADRSCODE
+
 )
 go
 
@@ -49,3 +52,4 @@ GO
 
 --select *
 --from fCfdiParametros('C_PREFEXENTO', 'C_PREFIVA', 'C_PREFICE', 'C_IVAADUANA', 'C_IVA', '-')
+

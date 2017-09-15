@@ -18,6 +18,7 @@ as
 --24/04/12 jcf Creación cfdi
 --02/07/12 jcf Agrega parámetro OTROS. 
 --08/02/17 jcf Elimina estado de lugarExpedicion
+--14/09/17 jcf Usa fCfdiParametros
 --
 return
 ( 
@@ -32,20 +33,14 @@ select rtrim(replace(ci.TAXREGTN, 'RFC ', '')) rfc,
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(RTRIM(ci.ZIPCODE)), 10) codigoPostal, 
 	left(dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(
 			rtrim(ci.ADDRESS1)+' '+rtrim(ci.ADDRESS2)+' '+RTRIM(ci.ZIPCODE)+' '+RTRIM(ci.COUNTY)+' '+RTRIM(ci.CITY)+' '+RTRIM(ci.CMPCNTRY)), 10), 250) LugarExpedicion,
-	'3.2' [version], 
+	nt.param1 [version], 
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(ISNULL(nt.INET7, '')), 10) rutaXml,
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(ISNULL(nt.INET8, '')), 10) regimen,
-	case when charindex('IMPUESTOS=', nt.inetinfo) > 0 and charindex(char(13), nt.inetinfo) > 0 then
-		substring(nt.inetinfo, charindex('IMPUESTOS=', nt.inetinfo)+10, charindex(char(13), nt.inetinfo, charindex('IMPUESTOS=', nt.inetinfo)) - charindex('IMPUESTOS=', nt.inetinfo) -10) 
-	else 'no hay impuestos' end impuestos,
-	CASE when charindex('OTROS=', nt.inetinfo) > 0 and  charindex(char(13), nt.inetinfo) > 0 then
-		substring(nt.inetinfo, charindex('OTROS=', nt.inetinfo)+6, charindex(char(13), nt.inetinfo, charindex('OTROS=', nt.inetinfo)) - charindex('OTROS=', nt.inetinfo) -6) 
-	else 'no hay otros datos' end otrosDatos
+	nt.param2 impuestos,
+	nt.param3 otrosDatos,
+	nt.param4 incluyeAddendaDflt
 from DYNAMICS..SY01500 ci			--sy_company_mstr
-left join SY01200 nt				--coInetAddress
-	on nt.Master_Type = 'CMP'
-	and nt.Master_ID = ci.INTERID
-	and nt.ADRSCODE = ci.LOCATNID
+cross apply dbo.fCfdiParametros('VERSION', 'IMPUESTOS', 'OTROS', 'ADDENDADFLT', 'NA', 'NA', ci.LOCATNID) nt
 where ci.INTERID = DB_NAME()
 )
 go

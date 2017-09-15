@@ -425,6 +425,7 @@ create view dbo.vwCfdTransaccionesDeVenta as
 --10/07/12 jcf Agrega metodoDePago, NumCtaPago
 --07/11/12 jcf Agrega parámetro a fCfdAddendaXML
 --24/02/14 jcf Agrega parámetro a fCfdAddendaXML para cliente Mabe
+--14/09/17 jcf Agrega parámetros incluyeAddendaDflt para addenda predeterminada para todos los clientes. Utilizado en MTP
 --
 select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora, 
 	tv.CUSTNMBR, tv.nombreCliente, tv.idImpuestoCliente, tv.total, tv.voidstts, 
@@ -460,7 +461,7 @@ select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora,
 	isnull(lf.mensajeEA, tv.estadoContabilizado) mensajeEA,
 	isnull(dx.metodoDePago, '') metodoDePago,
 	isnull(dx.NumCtaPago, '') NumCtaPago,
-	dbo.fCfdAddendaXML(tv.custnmbr,  tv.soptype, tv.sopnumbe, tv.docid, tv.cstponbr, tv.curncyid, tv.docdate, tv.xchgrate, tv.subtotal, tv.total) addenda
+	dbo.fCfdAddendaXML(tv.custnmbr,  tv.soptype, tv.sopnumbe, tv.docid, tv.cstponbr, tv.curncyid, tv.docdate, tv.xchgrate, tv.subtotal, tv.total, emi.incluyeAddendaDflt) addenda
 from vwSopTransaccionesVenta tv
 	cross join dbo.fCfdEmisor() emi
 	outer apply dbo.fCfdCertificadoVigente(tv.fechahora) fv
