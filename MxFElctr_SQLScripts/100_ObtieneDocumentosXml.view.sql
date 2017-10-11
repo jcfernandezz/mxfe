@@ -425,6 +425,8 @@ create view dbo.vwCfdTransaccionesDeVenta as
 --10/07/12 jcf Agrega metodoDePago, NumCtaPago
 --07/11/12 jcf Agrega parámetro a fCfdAddendaXML
 --24/02/14 jcf Agrega parámetro a fCfdAddendaXML para cliente Mabe
+--14/09/17 jcf Agrega parámetros incluyeAddendaDflt para addenda predeterminada para todos los clientes. Utilizado en MTP
+--				Agrega isocurrc
 --
 select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora, 
 	tv.CUSTNMBR, tv.nombreCliente, tv.idImpuestoCliente, tv.total, tv.voidstts, 
@@ -460,7 +462,8 @@ select tv.estadoContabilizado, tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora,
 	isnull(lf.mensajeEA, tv.estadoContabilizado) mensajeEA,
 	isnull(dx.metodoDePago, '') metodoDePago,
 	isnull(dx.NumCtaPago, '') NumCtaPago,
-	dbo.fCfdAddendaXML(tv.custnmbr,  tv.soptype, tv.sopnumbe, tv.docid, tv.cstponbr, tv.curncyid, tv.docdate, tv.xchgrate, tv.subtotal, tv.total) addenda
+	tv.curncyid isocurrc,
+	dbo.fCfdAddendaXML(tv.custnmbr,  tv.soptype, tv.sopnumbe, tv.docid, tv.cstponbr, tv.curncyid, tv.docdate, tv.xchgrate, tv.subtotal, tv.total, emi.incluyeAddendaDflt) addenda
 from vwSopTransaccionesVenta tv
 	cross join dbo.fCfdEmisor() emi
 	outer apply dbo.fCfdCertificadoVigente(tv.fechahora) fv
@@ -495,9 +498,10 @@ alter view dbo.vwCfdDocumentosAImprimir as
 --09/07/14 jcf Modifica la obtención del nombre del archivo
 --13/07/16 jcf Agrega catálogo de método de pago
 --19/10/16 jcf Agrega rutaFileDrive. Util para reportes Crystal
+--18/09/17 jcf Agrega isocurrc
 --
 select tv.soptype, tv.docid, tv.sopnumbe, tv.fechahora fechaHoraEmision, tv.regimen regimenFiscal, 
-	tv.idImpuestoCliente rfcReceptor, tv.nombreCliente, tv.total, formaDePago, 
+	tv.idImpuestoCliente rfcReceptor, tv.nombreCliente, tv.total, formaDePago, tv.isocurrc,
 	--isnull(ca.descripcion, tv.metodoDePago) metodoDePago, 
 	tv.metodoDePago,
 	tv.NumCtaPago, tv.USERDEF1, 

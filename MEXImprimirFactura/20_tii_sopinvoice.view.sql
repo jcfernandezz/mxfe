@@ -1,21 +1,10 @@
-/****** Object:  View [dbo].[TII_SOPINVOICE]    Script Date: 12/21/2012 20:29:14 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 
 IF (OBJECT_ID ('dbo.TII_SOPINVOICE', 'V') IS NULL)
    exec('create view dbo.TII_SOPINVOICE as SELECT 1 as t');
 go
 
---IF OBJECT_ID ('dbo.TII_SOPINVOICE') IS NOT NULL
---   DROP view TII_SOPINVOICE
---GO
-
 alter VIEW [dbo].[TII_SOPINVOICE] AS 
---Propósito. Representación impresa de factura electrónica México
+--Propósito. Representación impresa de factura electrónica México. Habilitar codigoBarras si usa Crystal!
 --...2011 I García Creación.
 --27/08/12 jcf Agrega unidad de medida No aplica para items tipo servicio
 --09/11/12 jcf Agrega fCfdDatosAdicionales y comenta SOP10106
@@ -25,6 +14,8 @@ alter VIEW [dbo].[TII_SOPINVOICE] AS
 --14/09/15 JCF Ajusta monto en letras para MTP
 --19/11/15 jcf Modifica usd por us$ (usado en MTP)
 --17/10/16 jcf Agrega ORTDISAM, y CodigoBarras en caso de usar Crystal
+--18/09/17 jcf Agrega isocurrc, addLeyenda. Comenta codigoBarras. Habilitar si usa Crystal
+--20/09/17 jcf Agrega noExterior
 --
 SELECT 
 		SOPHEADER.DOCSTATUS,
@@ -42,6 +33,10 @@ SELECT
 		SOPHEADER.PRSTADCD,
 		SOPHEADER.ShipToName,
 		SOPHEADER.ADDRESS1,
+		case when patindex('%#%', SOPHEADER.address1) = 0 then 
+			'-'
+		else right(rtrim(SOPHEADER.address1), len(SOPHEADER.address1)-patindex('%#%', SOPHEADER.address1)) 
+		end noExterior,
 		SOPHEADER.ADDRESS2,
 		SOPHEADER.ADDRESS3,
 		SOPHEADER.CITY,
@@ -77,6 +72,7 @@ SELECT
 		SOPHEADER.RATETPID,
 		SOPHEADER.EXGTBLID,
 		SOPHEADER.XCHGRATE,
+		SOPELECTINV.isocurrc,
 		SOPELECTINV.USERDEF1,
 		SOPELECTINV.NumCtaPago USERDEF2,
 		SOPELECTINV.metodoDePago USRTAB01,
@@ -151,8 +147,10 @@ SELECT
 		SOPELECTINV.cadenaOriginalSAT,
 		SOPELECTINV.noCertificadoSAT,
 		RIGHT('0' + CAST(DAY(SOPELECTINV.FechaTimbrado) AS VARCHAR(2)),2) + '/' + RIGHT('0' + CAST(MONTH(SOPELECTINV.FechaTimbrado) AS VARCHAR(2)),2) + '/' + CAST(YEAR(SOPELECTINV.FechaTimbrado) AS CHAR(4)) + ' ' + RIGHT('0' + CAST(DATEPART(HOUR,SOPELECTINV.FechaTimbrado) AS VARCHAR(2)),2) + ':' + RIGHT('0' + CAST(DATEPART(MINUTE,SOPELECTINV.FechaTimbrado) AS VARCHAR(2)),2) + ':' + RIGHT('0' + CAST(DATEPART(SECOND,SOPELECTINV.FechaTimbrado) AS VARCHAR(2)),2) AS FechaTimbrado,
-		RTRIM(SOPELECTINV.rutaYNomArchivo) AS rutaYNomArchivo,
-		dbo.fCfdObtieneImagenC(SOPELECTINV.rutaYNomArchivo) codigoBarras
+		dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(RTRIM(substring(cm.cmmttext, 1, 350))), 10) addLeyenda,
+
+		RTRIM(SOPELECTINV.rutaYNomArchivo) AS rutaYNomArchivo
+		--dbo.fCfdObtieneImagenC(SOPELECTINV.rutaYNomArchivo) codigoBarras
 FROM
 (
 		-- ENCABEZADO DE FACTURAS SOP EN LOTE
@@ -351,6 +349,12 @@ LEFT OUTER JOIN vwCfdDocumentosAImprimir as SOPELECTINV WITH (NOLOCK)
 
 INNER JOIN RM00101 as RMCUSTOMER WITH (NOLOCK)
 	ON SOPHEADER.CUSTNMBR = RMCUSTOMER.CUSTNMBR
+
+left join sop10106 cm
+	on cm.sopnumbe = SOPHEADER.sopnumbe
+	and cm.soptype = SOPHEADER.soptype
+	and cm.comment_1 != ''
+
 GO
 
 

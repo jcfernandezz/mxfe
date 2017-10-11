@@ -5,7 +5,7 @@ GO
 create function dbo.fCfdParametrosAddenda(@p_custnmbr char(15), @tag1 varchar(15), @tag2 varchar(15), @tag3 varchar(15))
 returns table
 as
---Propósito. Devuelve los parámetros de la Addenda. 
+--Propósito. Devuelve los parámetros de la Addenda por cliente
 --Requisitos. Los @tagx deben configurarse en la ventana Información de internet del id de dirección ADDENDA de cada cliente
 --7/11/12 jcf Creación 
 --
@@ -184,7 +184,8 @@ IF OBJECT_ID ('dbo.fCfdAddendaXML') IS NOT NULL
 GO
 
 create function dbo.fCfdAddendaXML(	@p_custnmbr char(15), @p_soptype smallint, @p_sopnumbe char(21), 
-									@p_docid char(15), @p_CSTPONBR char(21), @p_moneda char(15), @p_docdate datetime, @p_xchgrate numeric(21,7), @p_subtotal numeric(21,5), @p_total numeric(19,6))
+									@p_docid char(15), @p_CSTPONBR char(21), @p_moneda char(15), @p_docdate datetime, @p_xchgrate numeric(21,7), @p_subtotal numeric(21,5), @p_total numeric(19,6),
+									@incluyeAddendaDflt varchar(2)='NO')
 
 returns xml 
 as
@@ -195,14 +196,28 @@ as
 --26/11/12 jcf Modifica addenda de cliente ADO. El tipo está configurado en el cliente.
 --03/09/13 jcf Agrega cfdi namespace
 --24/02/14 jcf Agrega addenda de cliente Mabe
+--14/09/17 jcf Agrega parámetros incluyeAddendaDflt para addenda predeterminada para todos los clientes. Utilizado en MTP
 --
 begin
 	declare @cncp xml, @numDigitos int, @posicion int --, @satNameSpace varchar(100);
 	select @numDigitos = len(@p_CSTPONBR),
 		@posicion = 3
-	
+	if @incluyeAddendaDflt= 'SI'
+	begin
+		WITH XMLNAMESPACES ('http://www.sat.gob.mx/cfd/3' as cfdi)
+		select @cncp = (
+			select LTRIM(rtrim(@p_CSTPONBR)) addPedidoCliente,
+				(select dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(RTRIM(substring(cmmttext, 1, 350))), 10) addLeyenda
+				from sop10106
+				where sopnumbe = @p_sopnumbe
+				and soptype = @p_soptype
+				and comment_1 != ''
+				) addLeyenda
+			FOR XML PATH(''), type, root('cfdi:Addenda'), elements
+		)
+	end
 	--Cliente ADO requiere un número de referencia que está en CSTPONBR. Ref. Addenda Grupo ADO_REF.doc
-	if rtrim(@p_custnmbr) = '000011658' and @numDigitos >= @posicion
+	else if rtrim(@p_custnmbr) = '000011658' and @numDigitos >= @posicion
 	begin
 		WITH XMLNAMESPACES ('http://www.sat.gob.mx/cfd/3' as cfdi)
 		select @cncp = (
@@ -314,7 +329,7 @@ GO
 --end
 --go
 --------------------------------------------------------------------------------------------------------
---SELECT dbo.fCfdAddendaXML(	'005562749', 3, '0007305', 'FVE', '888999', 'MXN', '2/27/14', 1, 3600.1, 4176.12)
+--SELECT dbo.fCfdAddendaXML(	'005562749', 3, '0007305', 'FVE', '888999', 'MXN', '2/27/14', 1, 3600.1, 4176.12, 'SI')
 --select * from dbo.fCfdEmisor()
 --select dbo.fCfdAddendaDetalle(3, '0007303', 'V-IVA 16%')
 
