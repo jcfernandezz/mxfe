@@ -33,13 +33,15 @@ values('PAC', '\\mtp-colo-fp01\Company$\GP_Share\Invoices\Capsa\fePAC\prod-00001
 go
 insert into cfd_CER00100 
 ( ID_Certificado, ruta_certificado, ruta_clave,contrasenia_clave, fecha_vig_desde, fecha_vig_hasta, estado, [fecha_ultima_modificacio], [TIME1], [usr_ultima_modificacion])
-values('CERT01', '\\mtp-colo-fp01\Company$\GP_Share\Invoices\Capsa\feCIA\00001000000300940979.cer', 
-				 '\\mtp-colo-fp01\Company$\GP_Share\Invoices\Capsa\feCIA\00001000000300940979.key', 
-				'Vialux2013', '9/30/13', '9/20/17', 1, 0, 0, '')
+values('CERT01', '\\mtp-colo-fp01\Company$\GP_Share\Invoices\Capsa\feCIA\00001000000401024586.cer', 
+				 '\\mtp-colo-fp01\Company$\GP_Share\Invoices\Capsa\feCIA\CSD_CAPSA_CAP0005112F8_20151216_124941.key', 
+				'Capsa2015', '12/16/15', '12/16/19', 1, 0, 0, '')
 go
+
 
 ------------------------------------------------------------------------------------------------------------
 
 select *
 from cfd_CER00100
-where id_certificado = 'PAC'
+where id_certificado = 'CERT01'
+

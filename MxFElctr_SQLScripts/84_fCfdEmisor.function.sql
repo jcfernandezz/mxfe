@@ -1,3 +1,4 @@
+--use mtp1
 
 IF OBJECT_ID ('dbo.fCfdEmisor') IS NOT NULL
    DROP FUNCTION dbo.fCfdEmisor
@@ -18,7 +19,7 @@ as
 --24/04/12 jcf Creación cfdi
 --02/07/12 jcf Agrega parámetro OTROS. 
 --08/02/17 jcf Elimina estado de lugarExpedicion
---14/09/17 jcf Usa fCfdiParametros
+--14/09/17 jcf Usa fCfdiParametros y agrega estado a lugarExpedicion
 --
 return
 ( 
@@ -32,7 +33,7 @@ select rtrim(replace(ci.TAXREGTN, 'RFC ', '')) rfc,
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(RTRIM(ci.CMPCNTRY)), 10) pais, 
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(RTRIM(ci.ZIPCODE)), 10) codigoPostal, 
 	left(dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(
-			rtrim(ci.ADDRESS1)+' '+rtrim(ci.ADDRESS2)+' '+RTRIM(ci.ZIPCODE)+' '+RTRIM(ci.COUNTY)+' '+RTRIM(ci.CITY)+' '+RTRIM(ci.CMPCNTRY)), 10), 250) LugarExpedicion,
+			rtrim(ci.ADDRESS1)+' '+rtrim(ci.ADDRESS2)+' '+RTRIM(ci.ZIPCODE)+' '+RTRIM(ci.COUNTY)+' '+RTRIM(ci.CITY)+' '+RTRIM(ci.[STATE])+' '+RTRIM(ci.CMPCNTRY)), 10), 250) LugarExpedicion,
 	nt.param1 [version], 
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(ISNULL(nt.INET7, '')), 10) rutaXml,
 	dbo.fCfdReemplazaSecuenciaDeEspacios(dbo.fCfdReemplazaCaracteresNI(ISNULL(nt.INET8, '')), 10) regimen,
