@@ -1,15 +1,15 @@
-IF OBJECT_ID ('dbo.fCfdiParametros') IS NOT NULL
-   DROP FUNCTION dbo.fCfdiParametros
+IF OBJECT_ID ('dbo.fCfdiParametrosCliente') IS NOT NULL
+   DROP FUNCTION dbo.fCfdiParametrosCliente
 GO
 
-create function dbo.fCfdiParametros(@tag1 varchar(17), @tag2 varchar(17), @tag3 varchar(17), @tag4 varchar(17), @tag5 varchar(17), @tag6 varchar(17), @ADRSCODE char(15) = 'MAIN')
+create function dbo.fCfdiParametrosCliente(@CUSTNMBR char(15), @tag1 varchar(17), @tag2 varchar(17), @tag3 varchar(17), @tag4 varchar(17), @tag5 varchar(17), @tag6 varchar(17), @ADRSCODE char(15) = 'MAIN')
 returns table
 as
 --Propósito. Devuelve los parámetros de la compañía
 --Requisitos. Los @tagx deben configurarse en la ventana Información de internet del id de dirección @ADRSCODE de la compañía.
 --21/11/16 jcf Creación 
 --14/09/17 jcf Agrega inet7 y 8
---13/10/17 jcf Agrega datos de dir PREDETERMINADO
+--13/10/17 jcf Agrega filtro por COMPANIA
 --
 return
 (
@@ -33,24 +33,21 @@ return
 			substring(ia.inetinfo, charindex(@tag6+'=', ia.inetinfo)+ len(@tag6)+1, charindex(char(13), ia.inetinfo, charindex(@tag6+'=', ia.inetinfo)) - charindex(@tag6+'=', ia.inetinfo) - len(@tag6)-1)
 		else 'no existe tag: '+@tag6 end param6,
 		ia.INET7, ia.INET8
-	from SY01200 ia					--coInetAddress Dirección de la compañía
-	inner join DYNAMICS..SY01500 ci	--sy_company_mstr 
-		on ia.Master_Type = 'CMP'
-		and ci.INTERID = DB_NAME()
-		and ia.Master_ID = ci.INTERID
-		and ia.ADRSCODE = case when @ADRSCODE = 'PREDETERMINADO' then ci.LOCATNID else @ADRSCODE end
-	inner join sy00600 lm			--sy_location_mstr
-		on lm.CMPANYID = ci.CMPANYID
-		and lm.LOCATNID = ia.ADRSCODE
-
+	from SY01200 ia			--coInetAddress
+	inner join rm00101 ci	
+		on ci.custnmbr = ia.Master_ID
+		and ci.custnmbr = @CUSTNMBR
+		and ia.Master_Type = 'CUS'
+		and ia.ADRSCODE = case when @ADRSCODE = 'PREDETERMINADO' then ci.ADRSCODE else @ADRSCODE end
 )
 go
 
-IF (@@Error = 0) PRINT 'Creación exitosa de la función: fCfdiParametros()'
-ELSE PRINT 'Error en la creación de la función: fCfdiParametros()'
+
+IF (@@Error = 0) PRINT 'Creación exitosa de la función: fCfdiParametrosCliente()'
+ELSE PRINT 'Error en la creación de la función: fCfdiParametrosCliente()'
 GO
 
+-------------------------------------------------------------------------------------------------------------
 --select *
---from dbo.fCfdiParametros('VERSION', 'MCP', 'na', 'na', 'na', 'na', 'PREDETERMINADO')
-
+--from fCfdiParametrosCliente('000011658                      ', 'tipoAddenda', 'NA', 'NA', 'NA', 'NA', 'NA', 'PREDETERMINADO')
 

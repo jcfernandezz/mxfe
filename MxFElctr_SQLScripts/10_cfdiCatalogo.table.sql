@@ -3,18 +3,25 @@ begin
 	create table dbo.cfdiCatalogo
 	(
 	tipo		varchar(5) NOT NULL default 'NA',
-	clave		varchar(5) NOT NULL default '',
+	clave		varchar(10) NOT NULL default '',
 	descripcion varchar(150) NOT NULL default '',
 	CONSTRAINT pkCfdiCatalogo primary key nonclustered
 	(tipo, clave) WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 	) on [PRIMARY];
 end
+else
+begin
+	ALTER TABLE dbo.cfdiCatalogo DROP CONSTRAINT pkCfdiCatalogo;
+	alter table dbo.cfdiCatalogo alter column clave varchar(10) not null;
+	ALTER TABLE dbo.cfdiCatalogo ADD CONSTRAINT pkCfdiCatalogo PRIMARY KEY (tipo, clave);
+end
 go
 
+--MTDPG Médoto de pago
+------------------------------------------------------------------------------------
 if not exists(select 1 from dbo.cfdiCatalogo where tipo = 'MTDPG' and clave = '01')
 	insert into cfdiCatalogo(tipo, clave, descripcion)
 	values('MTDPG', '01', 'Efectivo');
-
 
 if not exists(select 1 from dbo.cfdiCatalogo where tipo = 'MTDPG' and clave = '02')
 	insert into cfdiCatalogo(tipo, clave, descripcion)
